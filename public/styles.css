@@ -20,6 +20,11 @@ header .logo {
     font-weight: bold;
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
 header nav a {
     color: white;
     margin: 0 10px;
