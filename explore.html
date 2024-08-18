@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Projects </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">InspireEd</div>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="submit.html">Submit a Project</a>
+            <a href="explore.html">Explore Projects</a>
+            <button class="connect-wallet" onclick="connectWallet()">Connect Wallet</button>
+        </nav>
+    </header>
+
+    <section class="project-listing">
+        <h2>Explore Educational Projects</h2>
+
+        <div class="project">
+            <h3>Project Title 1</h3>
+            <p>Brief description of the project...</p>
+            <button class="invest-button" onclick="openInvestPopup('Project Title 1')">Invest</button>
+        </div>
+
+        <div class="project">
+            <h3>Project Title 2</h3>
+            <p>Brief description of the project...</p>
+            <button class="invest-button" onclick="openInvestPopup('Project Title 2')">Invest</button>
+        </div>
+    </section>
+
+    <div id="invest-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-button" onclick="closeInvestPopup()">&times;</span>
+            <h3 id="project-title">Invest in Project</h3>
+            <label for="invest-amount"></label>
+            <input type="number" id="invest-amount" placeholder="Enter amount to invest">
+            <button onclick="sendInvestment()">Send Investment</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 InspireEd. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

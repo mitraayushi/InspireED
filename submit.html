@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">InspireEd</div>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="submit.html">Submit a Project</a>
+            <a href="explore.html">Explore Projects</a>
+            <button class="connect-wallet" onclick="connectWallet()">Connect Wallet</button>
+        </nav>
+    </header>
+
+    <section class="submission-form">
+        <h2>Submit Your Project</h2>
+        <form>
+            <label for="title">Project Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="technology">Technology</option>
+                <option value="research">Research</option>
+                <option value="community">Community Initiatives</option>
+            </select>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="5" required></textarea>
+            
+            <label for="links">Project related links:</label>
+            <input type="text" id="links" name="links" required>
+
+            <label for="attachments">Upload Attachments:</label>
+            <input type="file" id="attachments" name="attachments" multiple>
+
+            <label for="funding">Funding Target:</label>
+            <input type="number" id="funding" name="funding" required>
+
+            <label for="timeline">Timeline:</label>
+            <input type="text" id="timeline" name="timeline" required>
+
+            <label for="team">Team Information:</label>
+            <textarea id="team" name="team" rows="3" required></textarea>
+
+            <label for="wallet-address">Wallet Address:</label>
+            <textarea id="wallet-address" name="wallet-address" rows="1"></textarea>
+      
+            <button type="submit">Submit Project</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 InspireEd. All rights reserved.</p>
+    </footer>
+</body>
+</html>
