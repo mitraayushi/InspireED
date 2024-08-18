@@ -11,6 +11,6 @@ app.get('/', (req,res)=> {
 app.use(express.static(`${__root}/public`))
 
 app.listen(process.env.PORT || 8000, () => {
-    console.log("http://localhost:8000");
+    console.log("http://localhost:8000");//
     
 })
