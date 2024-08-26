@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Decentralized Education Funding Platform</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
   </head>
   <body>
     <header>
@@ -12,10 +13,9 @@
         <a href="home.html">InspireEd</a>
       </div>
       <nav>
-        <!-- <a href="home.html">Home</a> -->
         <a href="submit.html">Submit a Project</a>
         <a href="explore.html">Explore Projects</a>
-        <button class="connect-wallet" onclick="connectWallet()">
+        <button id="connectButton" class="connect-wallet" onclick="connectWallet()">
           Connect Wallet
         </button>
       </nav>
@@ -50,5 +50,60 @@
     <footer>
       <p>&copy; 2024 InspireEd. All rights reserved.</p>
     </footer>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> -->
+    <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+    <script>
+      let provider;
+
+      window.addEventListener('load', () => {
+        // Initialize ethers provider when the page is fully loaded
+        if (typeof window.ethereum !== 'undefined') {
+          provider = new ethers.providers.Web3Provider(window.ethereum);
+
+          // Check if wallet is already connected on page load
+          window.ethereum
+            .request({ method: "eth_accounts" })
+            .then((accounts) => {
+              if (accounts.length > 0) {
+                document.getElementById("connectButton").innerText = "Connected";
+                localStorage.setItem("clientAddress", accounts[0]);
+                console.log("Wallet is already connected:", accounts[0]);
+              }
+            })
+            .catch((err) => {
+              console.error("Error checking wallet connection:", err);
+            });
+        } else {
+          console.error("MetaMask is not installed!");
+        }
+      });
+
+      async function connectWallet() {
+        try {
+          if (!provider) {
+            console.error("Provider is not initialized!");
+            return;
+          }
+
+          // Request connection to MetaMask
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+
+          // Get the connected wallet's signer
+          const signer = provider.getSigner();
+          const address = await signer.getAddress();
+
+          // Update button text to "Connected"
+          document.getElementById("connectButton").innerText = "Connected";
+
+          // Store the connected address in localStorage
+          localStorage.setItem("clientAddress", address);
+
+          console.log("Connected wallet address:", address);
+        } catch (error) {
+          console.error("Error connecting to MetaMask:", error);
+        }
+      }
+    </script>
   </body>
 </html>
