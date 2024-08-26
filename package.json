@@ -8,7 +8,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy:scrollTestnet": "npx hardhat run --network scrollTestnet scripts/deploy.ts",
+    "deploy:transferS": "npx hardhat run --network scrollTestnet scripts/existing_contract_use.ts",
+    "deploy:opencampus": "npx hardhat run --network opencampus scripts/deploy.ts",
+    "deploy:transfer": "npx hardhat run --network opencampus scripts/existing_contract_use.ts"
   },
   "keywords": [],
   "author": "",

@@ -10,14 +10,14 @@ function closeInvestPopup() {
     document.getElementById('invest-popup').style.display = 'none';
 }
 
-function sendInvestment() {
+// function sendInvestment() {
     
-    const amount = document.getElementById('invest-amount').value;
-    if (amount) {
-        alert(`Investment of ${amount} sent successfully!`);
+//     const amount = document.getElementById('invest-amount').value;
+//     if (amount) {
+//         alert(`Investment of ${amount} sent successfully!`);
        
-        closeInvestPopup();
-    } else {
-        alert('Please enter a valid amount.');
-    }
-}
+//         closeInvestPopup();
+//     } else {
+//         alert('Please enter a valid amount.');
+//     }
+// }

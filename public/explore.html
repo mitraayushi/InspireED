@@ -1,52 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Projects </title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Projects</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="logo">InspireEd</div>
-        <nav>
-            <a href="home.html">Home</a>
-            <a href="submit.html">Submit a Project</a>
-            <a href="explore.html">Explore Projects</a>
-            <button class="connect-wallet" onclick="connectWallet()">Connect Wallet</button>
-        </nav>
+      <div class="logo">InspireEd</div>
+      <nav>
+        <a href="home.html">Home</a>
+        <a href="submit.html">Submit a Project</a>
+        <a href="explore.html">Explore Projects</a>
+        <button class="connect-wallet" onclick="connectWallet()">
+          Connect Wallet
+        </button>
+      </nav>
     </header>
 
     <section class="project-listing">
-        <h2>Explore Educational Projects</h2>
+      <h2>Explore Educational Projects</h2>
 
-        <div class="project">
-            <h3>Project Title 1</h3>
-            <p>Brief description of the project...</p>
-            <button class="invest-button" onclick="openInvestPopup('Project Title 1')">Invest</button>
-        </div>
+      <div class="project">
+        <h3>Project Title 1</h3>
+        <p>Brief description of the project...</p>
+        <button
+          class="invest-button"
+          onclick="openInvestPopup('Project Title 1')"
+        >
+          Invest
+        </button>
+      </div>
 
-        <div class="project">
-            <h3>Project Title 2</h3>
-            <p>Brief description of the project...</p>
-            <button class="invest-button" onclick="openInvestPopup('Project Title 2')">Invest</button>
-        </div>
+      <div class="project">
+        <h3>Project Title 2</h3>
+        <p>Brief description of the project...</p>
+        <button
+          class="invest-button"
+          onclick="openInvestPopup('Project Title 2')"
+        >
+          Invest
+        </button>
+      </div>
     </section>
 
     <div id="invest-popup" class="popup">
-        <div class="popup-content">
-            <span class="close-button" onclick="closeInvestPopup()">&times;</span>
-            <h3 id="project-title">Invest in Project</h3>
-            <label for="invest-amount"></label>
-            <input type="number" id="invest-amount" placeholder="Enter amount to invest">
-            <button onclick="sendInvestment()">Send Investment</button>
-        </div>
+      <div class="popup-content">
+        <span class="close-button" onclick="closeInvestPopup()">&times;</span>
+        <h3 id="project-title">Invest in Project</h3>
+        <label for="invest-amount"></label>
+        <input
+          type="number"
+          id="invest-amount"
+          placeholder="Enter amount to invest"
+        />
+        <button onclick="sendInvestment()">Send Investment</button>
+      </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 InspireEd. All rights reserved.</p>
+      <p>&copy; 2024 InspireEd. All rights reserved.</p>
     </footer>
 
     <script src="scripts.js"></script>
-</body>
+    <script>
+      window.onload = async () => {
+        console.log("OSAKA");
+        // await window.ethereum.request({ method: "eth_requestAccounts" });
+
+        // Get the connected wallet's signer
+        //   const signer = provider.getSigner();
+        //   const address = await signer.getAddress();
+
+        // Update button text to "Connected"
+        const clientAddress = localStorage.getItem("clientAddress");
+        if (clientAddress) {
+          document.querySelector(".connect-wallet").innerText = "Connected";
+        }
+      };
+      async function connectWallet() {
+        try {
+          if (typeof window.ethereum !== "undefined") {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+
+            // Optionally check if the wallet is already connected
+            window.ethereum
+              .request({ method: "eth_accounts" })
+              .then((accounts) => {
+                if (accounts.length > 0) {
+                  document.getElementById("connectButton").innerText =
+                    "Connected";
+                  localStorage.setItem("clientAddress", accounts[0]);
+                  console.log("Wallet is already connected:", accounts[0]);
+                }
+              })
+              .catch((err) => {
+                console.error("Error checking wallet connection:", err);
+              });
+          } else {
+            console.error("MetaMask is not installed!");
+          }
+
+          // Request connection to MetaMask only when the button is clicked
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+
+          // Get the connected wallet's signer
+          const signer = provider.getSigner();
+          const address = await signer.getAddress();
+
+          // Update button text to "Connected"
+          document.getElementById("connectButton").innerText = "Connected";
+
+          // Store the connected address in localStorage
+          localStorage.setItem("clientAddress", address);
+
+          console.log("Connected wallet address:", address);
+        } catch (error) {
+          console.error("Error connecting to MetaMask:", error);
+        }
+      }
+
+      const sendInvestment = () => {
+        const amountEle = document.getElementById("invest-amount");
+        const clientAddress = localStorage.getItem("clientAddress");
+        console.log(clientAddress, amountEle.value);
+
+        fetch("/withdraw", {
+          method: "POST", // Specify the method as POST
+          headers: {
+            "Content-Type": "application/json", // Set the content type to JSON if you're sending JSON data
+          },
+          body: JSON.stringify({
+            clientAddress,
+            claimAmt: amountEle.value,
+          }),
+        })
+          .then((res) => {
+            res.json();
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+    </script>
+  </body>
 </html>
